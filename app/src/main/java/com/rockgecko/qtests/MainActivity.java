@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void updateUI(){
         boolean hasMediaLoc = checkSelfPermission(ACCESS_MEDIA_LOCATION)== PackageManager.PERMISSION_GRANTED;
-        String text = "Has ACCESS_MEDIA_LOCATION permission: " + hasMediaLoc;
+        String text = "Has ACCESS_MEDIA_LOCATION permission: " + hasMediaLoc+"\n";
         if(imgFile!=null && imgFile.exists()) try {
             ExifInterface exif = new ExifInterface(imgFile.getAbsolutePath());
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                 text+="Orientation is redacted";
             }
             else{
-                for(String tag : new String[]{ExifInterface.TAG_MAKE, ExifInterface.TAG_MODEL, ExifInterface.TAG_SHUTTER_SPEED_VALUE}) {
+                for(String tag : new String[]{ExifInterface.TAG_MAKE, ExifInterface.TAG_MODEL, ExifInterface.TAG_SHUTTER_SPEED_VALUE, ExifInterface.TAG_ORIENTATION}) {
                     text += tag + ": "+ exif.getAttribute(tag)+ "\n";
                 }
             }
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             updateUI();
         }
     }
-File imgFile;
+    File imgFile;
     public void takePhoto(View view) {
         if(checkSelfPermission(ACCESS_MEDIA_LOCATION)!=PackageManager.PERMISSION_GRANTED){
             Toast.makeText(this, "ACCESS_MEDIA_LOCATION is required", Toast.LENGTH_SHORT).show();
